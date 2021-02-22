@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{sternDreieckTitel}"></title>
+    <link rel="stylesheet" type="text/css" href="css/standard.css">
+    <link rel="stylesheet" type="text/css" href="css/sternDreieck.css">
+</head>
+<body>
+<div class="stern">
+    <h1 th:text="#{stern}"/>
+    <img src="/img/stern.png" th:alt="#{sternSchaltung}"><br><br>
+    <form id="S" th:action="@{/sternEval}" method="post">
+        <label for="SR1"><span>R<sub>a</sub>:</span></label><input id="SR1" name="R1" type="text" th:value="${tSR1}"
+                                                                   onchange="sumbitIfValid('S')"><br>
+        <label for="SR2"><span>R<sub>b</sub>:</span></label><input id="SR2" name="R2" type="text" th:value="${tSR2}"
+                                                                   onchange="sumbitIfValid('S')"><br>
+        <label for="SR3"><span>R<sub>c</sub>:</span></label><input id="SR3" name="R3" type="text" th:value="${tSR3}"
+                                                                   onchange="sumbitIfValid('S')">
+    </form>
+</div>
+
+<div class="dreieck">
+    <h1 th:text="#{dreieck}"/>
+    <img src="img/dreieck.png" th:alt="#{dreieckSchaltung}"><br><br>
+    <form id="D" th:action="@{/dreieckEval}" method="post">
+        <label for="DR1"><span>R<sub>ab</sub>:</span></label><input id="DR1" name="R1" type="text" th:value="${tDR1}"
+                                                                    onchange="sumbitIfValid('D')"><br>
+        <label for="DR2"><span>R<sub>bc</sub>:</span></label><input id="DR2" name="R2" type="text" th:value="${tDR2}"
+                                                                    onchange="sumbitIfValid('D')"><br>
+        <label for="DR3"><span>R<sub>ca</sub>:</span></label><input id="DR3" name="R3" type="text" th:value="${tDR3}"
+                                                                    onchange="sumbitIfValid('D')">
+    </form>
+</div>
+</body>
+<script>
+    function sumbitIfValid(char) {
+        for (let i = 1; i < 4; i++) {
+            if (isNaN(parseFloat(document.getElementById(char + "R" + i).value)))
+                return;
+        }
+        document.getElementById(char).submit();
+    }
+</script>
+</html>

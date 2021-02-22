@@ -1,0 +1,28 @@
+body {
+    text-align: center;
+    margin: auto;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    display: flex;
+}
+
+h1 {
+    text-align: center;
+    font-size: 250%;
+}
+
+div {
+    float: left;
+    width: 50%;
+    align-content: center;
+    font-size: xx-large;
+}
+
+.stern {
+    color: blue;
+}
+
+.dreieck {
+    color: red;
+}

@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * für eine Server-Server Kommunikation
+ */
 @RestController
 @RequestMapping("/demo")
 public class BaseController {
