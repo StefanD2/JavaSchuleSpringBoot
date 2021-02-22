@@ -11,9 +11,9 @@ public class AdressService {
     @Autowired
     private AdresseEntityRepository adresseEntityRepository;
 
-    public String getOrtsnameFromAdressID(int idAdresse){
+    public String getOrtsnameFromAdressID(int idAdresse) {
         AdresseEntity adresseEntity = adresseEntityRepository.findByIdAdresse(idAdresse).orElse(null);
-        if(adresseEntity!=null)
+        if (adresseEntity != null)
             return adresseEntity.getOrt().getOrtsname();
         return null;
     }
