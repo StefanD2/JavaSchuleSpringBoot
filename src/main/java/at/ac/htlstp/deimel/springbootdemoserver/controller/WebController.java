@@ -49,9 +49,9 @@ public class WebController {
         Double Ra = Double.parseDouble(sternDreickModel.getR1().replace(',', '.'));
         Double Rb = Double.parseDouble(sternDreickModel.getR2().replace(',', '.'));
         Double Rc = Double.parseDouble(sternDreickModel.getR3().replace(',', '.'));
-        model.addAttribute("tSR1", Ra);
-        model.addAttribute("tSR2", Rb);
-        model.addAttribute("tSR3", Rc);
+        model.addAttribute("tSR1", String.format("%.3f", Ra));
+        model.addAttribute("tSR2", String.format("%.3f", Rb));
+        model.addAttribute("tSR3", String.format("%.3f", Rc));
         double sum = Ra * Rb + Rb * Rc + Rc * Ra;
         model.addAttribute("tDR1", String.format("%.3f", sum / Rb));
         model.addAttribute("tDR2", String.format("%.3f", sum / Rc));
@@ -64,9 +64,9 @@ public class WebController {
         Double Rab = Double.parseDouble(sternDreickModel.getR1().replace(',', '.'));
         Double Rbc = Double.parseDouble(sternDreickModel.getR2().replace(',', '.'));
         Double Rca = Double.parseDouble(sternDreickModel.getR3().replace(',', '.'));
-        model.addAttribute("tDR1", Rab);
-        model.addAttribute("tDR2", Rbc);
-        model.addAttribute("tDR3", Rca);
+        model.addAttribute("tDR1", String.format("%.3f", Rab));
+        model.addAttribute("tDR2", String.format("%.3f", Rbc));
+        model.addAttribute("tDR3", String.format("%.3f", Rca));
         double sum = Rab + Rca + Rbc;
         model.addAttribute("tSR1", String.format("%.3f", Rca * Rab / sum));
         model.addAttribute("tSR2", String.format("%.3f", Rab * Rbc / sum));
