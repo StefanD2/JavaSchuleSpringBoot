@@ -14,20 +14,20 @@ public class AdresseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idAdresse", nullable = false)
+    @Column(name = "idadresse", nullable = false)
     private Integer idAdresse;
 
     @Column(name = "Strasse", length = 40) // default länge, wenn datenbank generiert wird
     private String strasse;
 
-    @Column(name = "HausNr")
+    @Column(name = "Hausnr")
     private String hausNr;
 
     // @Column(name = "idOrt", nullable = false)
     // private Integer idOrt;
 
     @ManyToOne
-    @JoinColumn(name="idOrt")
+    @JoinColumn(name="idort")
     private OrtEntity ort;
 
 }

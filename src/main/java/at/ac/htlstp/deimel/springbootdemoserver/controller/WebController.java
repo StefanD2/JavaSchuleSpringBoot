@@ -2,6 +2,8 @@ package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
 import at.ac.htlstp.deimel.springbootdemoserver.model.FormModel;
 import at.ac.htlstp.deimel.springbootdemoserver.model.SternDreickModel;
+import at.ac.htlstp.deimel.springbootdemoserver.service.AdressService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "")
 public class WebController {
 
+    private final AdressService adressService;
+
+    public WebController(AdressService adressService) {
+        this.adressService = adressService;
+    }
+
     @RequestMapping("")
     public String test(Model model) {
         model.addAttribute("name", "Deimel");
-        return "testview";
+        return "mainview";
     }
 
     @RequestMapping("/form")
@@ -73,5 +81,13 @@ public class WebController {
         model.addAttribute("tSR3", String.format("%.3f", Rbc * Rca / sum));
         return "sternDreieck";
     }
+
+    @RequestMapping("/a")
+    public String forma(Model model){
+        model.addAttribute("adressen", adressService);
+        return "a";
+    }
+
+
 
 }

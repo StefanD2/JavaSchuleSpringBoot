@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdressService {
 
-    @Autowired
-    private AdresseEntityRepository adresseEntityRepository;
+    private final AdresseEntityRepository adresseEntityRepository;
+
+    public AdressService(AdresseEntityRepository adresseEntityRepository) {
+        this.adresseEntityRepository = adresseEntityRepository;
+    }
 
     public String getOrtsnameFromAdressID(int idAdresse) {
         AdresseEntity adresseEntity = adresseEntityRepository.findByIdAdresse(idAdresse).orElse(null);

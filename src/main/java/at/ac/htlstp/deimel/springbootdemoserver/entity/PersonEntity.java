@@ -15,7 +15,7 @@ public class PersonEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idPerson", nullable = false)
+    @Column(name = "idperson", nullable = false)
     private Integer idPerson;
 
     @Column(name = "Vorname")

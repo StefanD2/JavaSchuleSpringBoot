@@ -16,7 +16,7 @@ public class OrtEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idOrt", nullable = false)
+    @Column(name = "idort", nullable = false)
     private Integer idOrt;
 
     @Column(name = "PLZ", nullable = false)

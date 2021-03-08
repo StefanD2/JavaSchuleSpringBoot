@@ -15,16 +15,16 @@ public class PersonWohntinAdresseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idWohntin", nullable = false)
+    @Column(name = "idwohntin", nullable = false)
     private Integer idWohntin;
 
     @Column(name = "seit")
     private Date seit;
 
-    @Column(name = "idPerson", nullable = false)
+    @Column(name = "idperson", nullable = false)
     private Integer idPerson;
 
-    @Column(name = "idAdresse", nullable = false)
+    @Column(name = "idadresse", nullable = false)
     private Integer idAdresse;
 
 }
