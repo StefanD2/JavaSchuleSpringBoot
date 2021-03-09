@@ -27,7 +27,7 @@ public class AdresseEntity implements Serializable {
     // private Integer idOrt;
 
     @ManyToOne
-    @JoinColumn(name="idort")
+    @JoinColumn(name = "idort")
     private OrtEntity ort;
 
 }

@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class BaseController {
 
     @PostMapping("/ping")
-    public ResponseEntity<String> pingPost(){
+    public ResponseEntity<String> pingPost() {
         return ResponseEntity.ok("pong");
     }
 
     @GetMapping("/ping")
-    public ResponseEntity<String> pingGet(){
+    public ResponseEntity<String> pingGet() {
         return ResponseEntity.ok("pong");
     }
 

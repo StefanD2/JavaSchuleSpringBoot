@@ -5,11 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/formeval}" method="post">
+<form method="post" th:action="@{/formeval}">
     <span th:text="${v1}"></span><br>
     <label for="textInput" th:text="#{input}"/>
-    <input type="text" id="textInput" name="textInput1" autofocus="autofocus" />
-    <input id="submit" type="submit" value="Submit!" />
+    <input autofocus="autofocus" id="textInput" name="textInput1" type="text"/>
+    <input id="submit" type="submit" value="Submit!"/>
 </form>
 </body>
 </html>

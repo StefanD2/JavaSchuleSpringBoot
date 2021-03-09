@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JunitTest {
 
     @Test
-    public void simpleTest(){
-        assertEquals(7,3+4);
+    public void simpleTest() {
+        assertEquals(7, 3 + 4);
     }
 
 }

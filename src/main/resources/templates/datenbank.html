@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Datenbank</title>
 </head>
 <body>
-    <button onclick="myonclick('adresse')">Adressen</button>
-    <button onclick="myonclick('ort')">Orte</button>
-    <button onclick="myonclick('person')">Person</button>
-    <br><br>
-    <table id="table"></table>
+<button onclick="myonclick('adresse')">Adressen</button>
+<button onclick="myonclick('ort')">Orte</button>
+<button onclick="myonclick('person')">Person</button>
+<br><br>
+<table id="table"></table>
 
 </body>
 <script>
-    function myonclick(table){
+    function myonclick(table) {
         let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("table").innerHTML = this.responseText;
             }
