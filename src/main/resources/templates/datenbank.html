@@ -1,19 +1,60 @@
 <!DOCTYPE html>
-<html>
 <head>
     <meta charset="UTF-8">
     <title>Datenbank</title>
 </head>
 <body>
+<span>Zeige Tabelle: </span>
+<button onclick="myonclick('person')">Person</button>
 <button onclick="myonclick('adresse')">Adressen</button>
 <button onclick="myonclick('ort')">Orte</button>
-<button onclick="myonclick('person')">Person</button>
 <br><br>
 <table id="table"></table>
+<br><br>
+<div id="div">
+</div>
 
 </body>
 <script>
+    function getAdressenInOrt(id){
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("div").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "/datenbank/getAdressenInOrt", true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(id);
+    }
+
+    function getAdressenForPerson(id){
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("div").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "/datenbank/getAdressenForPerson", true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(id);
+    }
+
+    function getPersonInAdress(id){
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("div").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "/datenbank/getPersonInAdress", true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(id);
+    }
+
+
     function myonclick(table) {
+        document.getElementById("div").innerHTML = "";
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {

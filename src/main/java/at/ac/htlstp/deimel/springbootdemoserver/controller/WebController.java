@@ -80,4 +80,9 @@ public class WebController {
         model.addAttribute("tSR3", String.format("%.3f", Rbc * Rca / sum));
         return "sternDreieck";
     }
+
+    @RequestMapping("/datenbank")
+    public String datenbank(Model model) {
+        return "datenbank";
+    }
 }
