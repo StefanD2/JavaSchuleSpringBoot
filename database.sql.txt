@@ -1,0 +1,80 @@
+# Angabe siehe Tafel (bzw OneNote Labor):
+# Datanbank Adressen
+# Person(id Person(Primärschlüssel(=unterstrichen)) -n- wohntIn(Primärschlüssel) -m- Adresse -n- -1- Ort
+
+drop database IF EXISTS 5badressen;
+create database 5badressen;
+use 5badressen;
+
+create table Person (
+	idPerson int(10) unsigned auto_increment primary key,
+	Vorname varchar(40),
+    Famname varchar(40) not null,
+    Telefon varchar(30),
+    Geburt date
+);
+
+create table Ort (
+	idOrt int(10) unsigned auto_increment primary key,
+    PLZ varchar(10) not null,
+    Ortsname varchar(50) not null,
+    Telefon varchar(15)
+);
+
+create table Adresse (
+	idAdresse int(10) unsigned auto_increment primary key,
+    Strasse varchar(50),
+    HausNr varchar(30),
+    idOrt int(10) unsigned not null
+);
+
+create table Person_wohntin_Adresse (
+	idWohntin int(10) unsigned auto_increment primary key,
+    seit date,
+    idPerson int(10) unsigned not null,
+    idAdresse int(10) unsigned not null
+);
+
+describe Person_wohntin_Adresse;
+
+insert into Ort (`PLZ`, `Ortsname`, `Telefon`)
+values ("3100", "St. Pölten", "+43"),
+	("3435", "Zwentendorf", "02277");
+
+insert into Adresse(`Strasse`,`HausNr`,`idOrt`)
+values ("Waldstraße", "3", 1),
+	("Josef-Mohnl-Gasse", "8", 2),
+    ("Hauptstraße", "27", 2),
+    ("Maraizellerstraße", "15", 1);
+
+insert into Person(Geburt, Famname, Vorname, Telefon)
+values ("2002-03-26", "Deimel", "Stefan", "6763939588"),
+	("2002-03-24", "Eilmsteiner", "Philipp", "6965244862"),
+    ("1908-01-01", "Stöger", "Julia", "458618423163"),
+    ("2000-12-24", "Wurm", "Stefan", "465646873543");
+
+insert into Person_wohntin_Adresse(idPerson, idAdresse, seit)
+values (1,1,"2002-03-26"),(1,2,"2016-07-02"),(2,1,"2016-07-02"),(3,1,"2016-07-03"),(4,1,"2016-07-01"),(3,3,"1908-01-01"),(4,4,"2005-04-30");
+
+# select people
+select idPerson from Person_wohntin_Adresse where idAdresse=1;
+select Vorname Famname from Person where idPerson in (2,3,4);
+
+# select alle, die in Zwentendorf wohnen
+select Vorname, Famname from Person where idPerson in (select idPerson from Person_wohntin_Adresse where idAdresse in (select idAdresse from Adresse where idOrt=(select idOrt from Ort where ortsname="Zwentendorf")));
+
+# select alle, die in St. Pölten wohnen
+select Vorname, Famname from Person where idPerson in (select idPerson from Person_wohntin_Adresse where idAdresse in (select idAdresse from Adresse where idOrt=(select idOrt from Ort where ortsname="St. Pölten")));
+
+# change name
+update Person set vorname = "Stephan" where vorname="Stefan" and famname="Wurm";
+select * from Person;
+
+# add email to person
+alter table Person add email varchar(100);
+describe Person;
+# add htl-email-adresse für alle die in St. Pölten wohnen
+update Person set email=concat(lower(`vorname`),".",lower(`famname`),"@htlstp.at") where idPerson in (select idPerson from Person_wohntin_Adresse where idAdresse in (select idAdresse from Adresse where idOrt=(select idOrt from Ort where ortsname="St. Pölten")));
+
+select * from Person;
+

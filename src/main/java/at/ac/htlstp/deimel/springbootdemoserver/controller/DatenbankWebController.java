@@ -83,7 +83,7 @@ public class DatenbankWebController {
             List<PersonWohntinAdresseEntity> personWohntinAdresseEntityList =
                     personWohntinAdresseEntityRepository.findAllByIdPerson(id);
             List<AdresseEntity> adresseEntityList = new ArrayList<>();
-            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> adresseEntityList.add(adresseEntityRepository.findById(personWohntinAdresseEntity.getIdPerson()).get()));
+            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> adresseEntityList.add(adresseEntityRepository.findById(personWohntinAdresseEntity.getIdAdresse()).get()));
             out += "<table>" + adressenListToHtmlTable(adresseEntityList, false) + "</table>";
             return ResponseEntity.ok(out);
         } catch (NumberFormatException e) {
@@ -99,7 +99,7 @@ public class DatenbankWebController {
             String out =
                     "<span>Adressen für " + ortEntity.getPLZ() + " " + ortEntity.getOrtsname() +
                             ":</span><br><br>";
-            List<AdresseEntity> adresseEntityList = adresseEntityRepository.findAllByOrt(ortEntity);
+            List<AdresseEntity> adresseEntityList = ortEntity.getAdressen();
             out += "<table>" + adressenListToHtmlTable(adresseEntityList, false, false) + "</table>";
             return ResponseEntity.ok(out);
         } catch (NumberFormatException e) {
