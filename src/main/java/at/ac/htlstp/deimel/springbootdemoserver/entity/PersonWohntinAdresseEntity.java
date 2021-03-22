@@ -21,10 +21,12 @@ public class PersonWohntinAdresseEntity implements Serializable {
     @Column(name = "seit")
     private Date seit;
 
-    @Column(name = "idperson", nullable = false)
-    private Integer idPerson;
+    @ManyToOne
+    @JoinColumn(name = "idperson")
+    private PersonEntity person;
 
-    @Column(name = "idadresse", nullable = false)
-    private Integer idAdresse;
+    @ManyToOne
+    @JoinColumn(name = "idadresse")
+    private AdresseEntity adresse;
 
 }

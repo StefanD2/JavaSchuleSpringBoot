@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "adresse")
@@ -23,11 +25,11 @@ public class AdresseEntity implements Serializable {
     @Column(name = "Hausnr")
     private String hausNr;
 
-    // @Column(name = "idOrt", nullable = false)
-    // private Integer idOrt;
-
     @ManyToOne
     @JoinColumn(name = "idort")
     private OrtEntity ort;
+
+    @OneToMany(mappedBy = "adresse")
+    private List<PersonWohntinAdresseEntity> personWohntinAdresse = new ArrayList<PersonWohntinAdresseEntity>();
 
 }

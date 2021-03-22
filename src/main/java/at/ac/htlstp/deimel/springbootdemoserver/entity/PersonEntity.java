@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
@@ -32,5 +34,8 @@ public class PersonEntity implements Serializable {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "person")
+    private List<PersonWohntinAdresseEntity> personWohntinAdresse = new ArrayList<PersonWohntinAdresseEntity>();
 
 }

@@ -61,9 +61,9 @@ public class DatenbankWebController {
                     "<span>Personen in " + adresseEntity.getStrasse() + " " + adresseEntity.getHausNr() + ", " + adresseEntity.getOrt().getPLZ() + " " + adresseEntity.getOrt().getOrtsname() +
                             ":</span><br><br>";
             List<PersonWohntinAdresseEntity> personWohntinAdresseEntityList =
-                    personWohntinAdresseEntityRepository.findAllByIdAdresse(id);
+                    personWohntinAdresseEntityRepository.findAllByAdresse(adresseEntity);
             List<PersonEntity> personEntityList = new ArrayList<>();
-            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> personEntityList.add(personEntityRepository.findById(personWohntinAdresseEntity.getIdPerson()).get()));
+            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> personEntityList.add(personWohntinAdresseEntity.getPerson()));
             out += "<table>" + personListToHtmlTable(personEntityList, false) + "</table>";
             return ResponseEntity.ok(out);
         } catch (NumberFormatException e) {
@@ -81,9 +81,9 @@ public class DatenbankWebController {
                             "am " + personEntity.getGeburt() +
                             ":</span><br><br>";
             List<PersonWohntinAdresseEntity> personWohntinAdresseEntityList =
-                    personWohntinAdresseEntityRepository.findAllByIdPerson(id);
+                    personWohntinAdresseEntityRepository.findAllByPerson(personEntity);
             List<AdresseEntity> adresseEntityList = new ArrayList<>();
-            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> adresseEntityList.add(adresseEntityRepository.findById(personWohntinAdresseEntity.getIdAdresse()).get()));
+            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> adresseEntityList.add(personWohntinAdresseEntity.getAdresse()));
             out += "<table>" + adressenListToHtmlTable(adresseEntityList, false) + "</table>";
             return ResponseEntity.ok(out);
         } catch (NumberFormatException e) {
