@@ -14,9 +14,9 @@ public interface PersonWohntinAdresseEntityRepository extends JpaRepository<Pers
 
     //List<PersonWohntinAdresseEntity> findAllByIdPerson(int idPerson);
 
-    List <PersonWohntinAdresseEntity> findAllByPerson(PersonEntity personEntity);
+    List<PersonWohntinAdresseEntity> findAllByPerson(PersonEntity personEntity);
 
-    List <PersonWohntinAdresseEntity> findAllByAdresse(AdresseEntity adresseEntity);
+    List<PersonWohntinAdresseEntity> findAllByAdresse(AdresseEntity adresseEntity);
 
 
 }

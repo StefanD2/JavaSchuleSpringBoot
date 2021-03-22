@@ -11,11 +11,14 @@
     <h1 th:text="#{stern}"/>
     <img src="/img/stern.png" th:alt="#{sternSchaltung}"><br><br>
     <form id="S" method="post" th:action="@{/sternEval}">
-        <label for="SR1"><span>R<sub>a</sub>:</span></label><input id="SR1" name="R1" onchange="sumbitIfValid('S')" th:value="${tSR1}"
+        <label for="SR1"><span>R<sub>a</sub>:</span></label><input id="SR1" name="R1" onchange="sumbitIfValid('S')"
+                                                                   th:value="${tSR1}"
                                                                    type="text"><br>
-        <label for="SR2"><span>R<sub>b</sub>:</span></label><input id="SR2" name="R2" onchange="sumbitIfValid('S')" th:value="${tSR2}"
+        <label for="SR2"><span>R<sub>b</sub>:</span></label><input id="SR2" name="R2" onchange="sumbitIfValid('S')"
+                                                                   th:value="${tSR2}"
                                                                    type="text"><br>
-        <label for="SR3"><span>R<sub>c</sub>:</span></label><input id="SR3" name="R3" onchange="sumbitIfValid('S')" th:value="${tSR3}"
+        <label for="SR3"><span>R<sub>c</sub>:</span></label><input id="SR3" name="R3" onchange="sumbitIfValid('S')"
+                                                                   th:value="${tSR3}"
                                                                    type="text">
     </form>
 </div>
@@ -24,11 +27,14 @@
     <h1 th:text="#{dreieck}"/>
     <img src="img/dreieck.png" th:alt="#{dreieckSchaltung}"><br><br>
     <form id="D" method="post" th:action="@{/dreieckEval}">
-        <label for="DR1"><span>R<sub>ab</sub>:</span></label><input id="DR1" name="R1" onchange="sumbitIfValid('D')" th:value="${tDR1}"
+        <label for="DR1"><span>R<sub>ab</sub>:</span></label><input id="DR1" name="R1" onchange="sumbitIfValid('D')"
+                                                                    th:value="${tDR1}"
                                                                     type="text"><br>
-        <label for="DR2"><span>R<sub>bc</sub>:</span></label><input id="DR2" name="R2" onchange="sumbitIfValid('D')" th:value="${tDR2}"
+        <label for="DR2"><span>R<sub>bc</sub>:</span></label><input id="DR2" name="R2" onchange="sumbitIfValid('D')"
+                                                                    th:value="${tDR2}"
                                                                     type="text"><br>
-        <label for="DR3"><span>R<sub>ca</sub>:</span></label><input id="DR3" name="R3" onchange="sumbitIfValid('D')" th:value="${tDR3}"
+        <label for="DR3"><span>R<sub>ca</sub>:</span></label><input id="DR3" name="R3" onchange="sumbitIfValid('D')"
+                                                                    th:value="${tDR3}"
                                                                     type="text">
     </form>
 </div>

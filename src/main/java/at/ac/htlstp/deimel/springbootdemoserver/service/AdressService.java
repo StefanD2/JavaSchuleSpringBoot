@@ -1,8 +1,6 @@
 package at.ac.htlstp.deimel.springbootdemoserver.service;
 
 import at.ac.htlstp.deimel.springbootdemoserver.entity.AdresseEntity;
-import at.ac.htlstp.deimel.springbootdemoserver.entity.PersonEntity;
-import at.ac.htlstp.deimel.springbootdemoserver.entity.PersonWohntinAdresseEntity;
 import at.ac.htlstp.deimel.springbootdemoserver.repository.AdresseEntityRepository;
 import org.springframework.stereotype.Service;
 
