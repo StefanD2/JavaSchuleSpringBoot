@@ -108,7 +108,6 @@ public class DatenbankWebController {
             OrtDTO ortDTO = ortService.findByIdOrt(id);
             if (ortDTO != null) {
                 model.addAttribute("aOrt", ortDTO);
-                List<AdressDTO> adressDTOList = ortDTO.getAdressen();
                 model.addAttribute("adressenInOrtList", ortDTO.getAdressen());
             } else {
                 model.addAttribute("internalError", "Ort-ID " + id + " does not exist");
