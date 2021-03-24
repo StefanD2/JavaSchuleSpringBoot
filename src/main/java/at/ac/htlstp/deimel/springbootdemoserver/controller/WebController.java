@@ -81,8 +81,8 @@ public class WebController {
         return "sternDreieck";
     }
 
-    @RequestMapping("/datenbank")
+    @RequestMapping("/datenbankRest")
     public String datenbank(Model model) {
-        return "datenbank";
+        return "datenbankRest";
     }
 }

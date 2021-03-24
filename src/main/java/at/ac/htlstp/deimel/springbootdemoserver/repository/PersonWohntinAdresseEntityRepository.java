@@ -10,13 +10,8 @@ import java.util.List;
 
 public interface PersonWohntinAdresseEntityRepository extends JpaRepository<PersonWohntinAdresseEntity, Integer>, JpaSpecificationExecutor<PersonWohntinAdresseEntity> {
 
-//    List<PersonWohntinAdresseEntity> findAllByIdAdresse(int idAdresse);
-
-    //List<PersonWohntinAdresseEntity> findAllByIdPerson(int idPerson);
-
     List<PersonWohntinAdresseEntity> findAllByPerson(PersonEntity personEntity);
 
     List<PersonWohntinAdresseEntity> findAllByAdresse(AdresseEntity adresseEntity);
-
 
 }

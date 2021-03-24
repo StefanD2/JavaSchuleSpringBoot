@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Datenbank</title>
+</head>
+<body>
+<span>Zeige Tabelle: </span>
+<button onclick="myonclick('person')">Person</button>
+<button onclick="myonclick('adresse')">Adressen</button>
+<button onclick="myonclick('ort')">Orte</button>
+<br><br>
+<table id="table"></table>
+<br><br>
+<div id="div">
+</div>
+
+</body>
+<script>
+    function getAdressenInOrt(id) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("div").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "/datenbankRest/getAdressenInOrt", true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(id);
+    }
+
+    function getAdressenForPerson(id) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("div").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "/datenbankRest/getAdressenForPerson", true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(id);
+    }
+
+    function getPersonInAdress(id) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("div").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "/datenbankRest/getPersonInAdress", true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(id);
+    }
+
+
+    function myonclick(table) {
+        document.getElementById("div").innerHTML = "";
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("table").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "/datenbankRest/getTable", true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(table);
+    }
+</script>
+</html>

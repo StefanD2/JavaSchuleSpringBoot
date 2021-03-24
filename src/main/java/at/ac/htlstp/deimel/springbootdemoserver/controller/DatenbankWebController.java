@@ -1,152 +1,122 @@
 package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
-import at.ac.htlstp.deimel.springbootdemoserver.entity.AdresseEntity;
-import at.ac.htlstp.deimel.springbootdemoserver.entity.OrtEntity;
-import at.ac.htlstp.deimel.springbootdemoserver.entity.PersonEntity;
-import at.ac.htlstp.deimel.springbootdemoserver.entity.PersonWohntinAdresseEntity;
-import at.ac.htlstp.deimel.springbootdemoserver.repository.AdresseEntityRepository;
-import at.ac.htlstp.deimel.springbootdemoserver.repository.OrtEntityRepository;
-import at.ac.htlstp.deimel.springbootdemoserver.repository.PersonEntityRepository;
-import at.ac.htlstp.deimel.springbootdemoserver.repository.PersonWohntinAdresseEntityRepository;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.AdressDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.OrtDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.PersonDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.PersonWohntInAdresseDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.service.AdressService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.OrtService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.PersonService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.PersonWohntInAdresseService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(path = "/datenbank")
 public class DatenbankWebController {
 
-    private final AdresseEntityRepository adresseEntityRepository;
-    private final OrtEntityRepository ortEntityRepository;
-    private final PersonEntityRepository personEntityRepository;
-    private final PersonWohntinAdresseEntityRepository personWohntinAdresseEntityRepository;
+    private final AdressService adressService;
+    private final PersonService personService;
+    private final OrtService ortService;
+    private final PersonWohntInAdresseService personWohntInAdresseService;
 
-    public DatenbankWebController(AdresseEntityRepository adresseEntityRepository, OrtEntityRepository ortEntityRepository, PersonEntityRepository personEntityRepository, PersonWohntinAdresseEntityRepository personWohntinAdresseEntityRepository) {
-        this.adresseEntityRepository = adresseEntityRepository;
-        this.ortEntityRepository = ortEntityRepository;
-        this.personEntityRepository = personEntityRepository;
-        this.personWohntinAdresseEntityRepository = personWohntinAdresseEntityRepository;
+    public DatenbankWebController(AdressService adressService, PersonService personService, OrtService ortService, PersonWohntInAdresseService personWohntInAdresseService) {
+        this.adressService = adressService;
+        this.personService = personService;
+        this.ortService = ortService;
+        this.personWohntInAdresseService = personWohntInAdresseService;
     }
 
-    @PostMapping(value = "/getTable", consumes = "text/plain")
-    public ResponseEntity<String> getTable(@RequestBody String value) {
-        String out;
-        if (value.equals("adresse")) {
-            List<AdresseEntity> adresseEntityList = adresseEntityRepository.findAll();
-            out = adressenListToHtmlTable(adresseEntityList, true);
-            return ResponseEntity.ok(out);
-        } else if (value.equals("ort")) {
-            List<OrtEntity> ortEntityList = ortEntityRepository.findAll();
-            out = ortListToHtmlTable(ortEntityList, true);
-        } else if (value.equals("person")) {
-            List<PersonEntity> personEntityList = personEntityRepository.findAll();
-            out = personListToHtmlTable(personEntityList, true);
-        } else {
-            return ResponseEntity.ok("Table not found");
-        }
-        return ResponseEntity.ok(out);
+    @RequestMapping("")
+    public String datenbank() {
+        return "datenbank";
     }
 
-    @PostMapping(value = "/getPersonInAdress", consumes = "text/plain")
-    public ResponseEntity<String> getPersonInAdress(@RequestBody String value) {
+    @RequestMapping("/getAdressen")
+    public String getAdressen(Model model) {
+        List<AdressDTO> adressDTOList = adressService.findAll();
+        model.addAttribute("adressenList", adressDTOList);
+        return "datenbank";
+    }
+
+    @RequestMapping("/getPersonen")
+    public String getPersonen(Model model) {
+        List<PersonDTO> personDTOList = personService.findAll();
+        model.addAttribute("personenList", personDTOList);
+        return "datenbank";
+    }
+
+    @RequestMapping("/getOrte")
+    public String getOrte(Model model) {
+        List<OrtDTO> ortDTOList = ortService.findAll();
+        model.addAttribute("ortList", ortDTOList);
+        return "datenbank";
+    }
+
+    @RequestMapping(value = "/getPersonInAdresse")
+    public String getPersonInAdresse(@RequestParam(value = "id") String value, Model model) {
+        List<AdressDTO> adressDTOList = adressService.findAll();
+        model.addAttribute("adressenList", adressDTOList);
         try {
             int id = Integer.parseInt(value);
-            AdresseEntity adresseEntity = adresseEntityRepository.findByIdAdresse(id).get();
-            String out =
-                    "<span>Personen in " + adresseEntity.getStrasse() + " " + adresseEntity.getHausNr() + ", " + adresseEntity.getOrt().getPLZ() + " " + adresseEntity.getOrt().getOrtsname() +
-                            ":</span><br><br>";
-            List<PersonWohntinAdresseEntity> personWohntinAdresseEntityList =
-                    personWohntinAdresseEntityRepository.findAllByAdresse(adresseEntity);
-            List<PersonEntity> personEntityList = new ArrayList<>();
-            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> personEntityList.add(personWohntinAdresseEntity.getPerson()));
-            out += "<table>" + personListToHtmlTable(personEntityList, false) + "</table>";
-            return ResponseEntity.ok(out);
+            AdressDTO adressDTO = adressService.findByIdAdresse(id);
+            if (adressDTO != null) {
+                List<PersonWohntInAdresseDTO> personWohntInAdresseDTOList =
+                        personWohntInAdresseService.findAllByAdresse(adressDTO);
+                model.addAttribute("personInAdresseList", personWohntInAdresseDTOList);
+                model.addAttribute("aAdresse", adressDTO);
+            } else {
+                model.addAttribute("internalError", "Adress-Id " + id + " does not exist");
+            }
         } catch (NumberFormatException e) {
-            return ResponseEntity.ok(e.toString());
+            model.addAttribute("internalError", e.toString());
         }
+        return "datenbank";
     }
 
-    @PostMapping(value = "/getAdressenForPerson", consumes = "text/plain")
-    public ResponseEntity<String> getAdressenForPerson(@RequestBody String value) {
+    @RequestMapping(value = "/getAdressenForPerson")
+    public String getAdressenForPerson(@RequestParam(value = "id") String value, Model model) {
+        List<PersonDTO> personDTOList = personService.findAll();
+        model.addAttribute("personenList", personDTOList);
         try {
             int id = Integer.parseInt(value);
-            PersonEntity personEntity = personEntityRepository.findByIdPerson(id).get();
-            String out =
-                    "<span>Adressen für " + personEntity.getVorname() + " " + personEntity.getFamname() + ", geboren " +
-                            "am " + personEntity.getGeburt() +
-                            ":</span><br><br>";
-            List<PersonWohntinAdresseEntity> personWohntinAdresseEntityList =
-                    personWohntinAdresseEntityRepository.findAllByPerson(personEntity);
-            List<AdresseEntity> adresseEntityList = new ArrayList<>();
-            personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> adresseEntityList.add(personWohntinAdresseEntity.getAdresse()));
-            out += "<table>" + adressenListToHtmlTable(adresseEntityList, false) + "</table>";
-            return ResponseEntity.ok(out);
+            PersonDTO personDTO = personService.findByIdPerson(id);
+            if (personDTO != null) {
+                List<PersonWohntInAdresseDTO> personWohntInAdresseDTOList =
+                        personWohntInAdresseService.findAllByPerson(personDTO);
+                model.addAttribute("aPerson", personDTO);
+                model.addAttribute("adressenForPersonList", personWohntInAdresseDTOList);
+            } else {
+                model.addAttribute("internalError", "Person-Id " + id + " does not exist");
+            }
         } catch (NumberFormatException e) {
-            return ResponseEntity.ok(e.toString());
+            model.addAttribute("internalError", e.toString());
         }
+        return "datenbank";
     }
 
-    @PostMapping(value = "/getAdressenInOrt", consumes = "text/plain")
-    public ResponseEntity<String> getAdressenInOrt(@RequestBody String value) {
+    @RequestMapping(value = "/getAdressenInOrt")
+    public String getAdressenInOrt(@RequestParam(value = "id") String value, Model model) {
+        List<OrtDTO> ortDTOList = ortService.findAll();
+        model.addAttribute("ortList", ortDTOList);
         try {
             int id = Integer.parseInt(value);
-            OrtEntity ortEntity = ortEntityRepository.findByIdOrt(id).get();
-            String out =
-                    "<span>Adressen für " + ortEntity.getPLZ() + " " + ortEntity.getOrtsname() +
-                            ":</span><br><br>";
-            List<AdresseEntity> adresseEntityList = ortEntity.getAdressen();
-            out += "<table>" + adressenListToHtmlTable(adresseEntityList, false, false) + "</table>";
-            return ResponseEntity.ok(out);
+            OrtDTO ortDTO = ortService.findByIdOrt(id);
+            if (ortDTO != null) {
+                model.addAttribute("aOrt", ortDTO);
+                List<AdressDTO> adressDTOList = ortDTO.getAdressen();
+                model.addAttribute("adressenInOrtList", ortDTO.getAdressen());
+            } else {
+                model.addAttribute("internalError", "Ort-ID " + id + " does not exist");
+            }
         } catch (NumberFormatException e) {
-            return ResponseEntity.ok(e.toString());
+            model.addAttribute("internalError", e.toString());
         }
-    }
-
-    private String adressenListToHtmlTable(List<AdresseEntity> adresseEntityList, boolean get) {
-        return adressenListToHtmlTable(adresseEntityList, get, true);
-    }
-
-    private String adressenListToHtmlTable(List<AdresseEntity> adresseEntityList, boolean get, boolean ort) {
-        String out = "<tr><th>Straße</th><th>Hausnummer</th>" + (ort ?
-                "<th>Ort</th>" : "") + (get ? "<th>Personen</th>" : "") +
-                "</tr>";
-        for (AdresseEntity adresseEntity : adresseEntityList) {
-            out += "<tr><td>" + adresseEntity.getStrasse() + "</td><td>" + adresseEntity.getHausNr() + "</td>" +
-                    (ort ? "<td>" +
-                            adresseEntity.getOrt().getPLZ() + " " + adresseEntity.getOrt().getOrtsname() + "</td>" : "") +
-                    (get ? "<td><button onclick=\"getPersonInAdress('" + adresseEntity.getIdAdresse() + "')\">get" +
-                            "</button>" : "") + "</td>" +
-                    "</tr>";
-        }
-        return out;
-    }
-
-    private String personListToHtmlTable(List<PersonEntity> personEntityList, boolean get) {
-        String out = "<tr><th>Vorname</th><th>Familienname</th><th>Geburtsdatum</th><th>Telefon</th><th>E-Mail</th>" +
-                (get ? "<th>Adressen</th>" : "") + "</tr>";
-        for (PersonEntity personEntity : personEntityList) {
-            out += "<tr><td>" + personEntity.getVorname() + "</td><td>" + personEntity.getFamname() + "</td><td>" + personEntity.getGeburt() +
-                    "</td><td>" + personEntity.getTelefon() + "</td><td>" + personEntity.getEmail() + "</td>" +
-                    (get ? "<th><button onclick=\"getAdressenForPerson('" + personEntity.getIdPerson() + "')\">get" +
-                            "</button></th>" : "") + "</tr>";
-        }
-        return out;
-    }
-
-    private String ortListToHtmlTable(List<OrtEntity> ortEntityList, boolean get) {
-        String out = "<tr><th>PLZ</th><th>Ortsname</th><th>Vorwahl</th> " + (get ?
-                "<th>Adressen</th>" : "") + "</tr>";
-        for (OrtEntity ortEntity : ortEntityList) {
-            out += "<tr><td>" + ortEntity.getPLZ() + "</td><td>" + ortEntity.getOrtsname() + "</td><td>" + ortEntity.getTelefon() + "</td>" + (get ? "<td><button onclick=\"getAdressenInOrt('" + ortEntity.getIdOrt() + "')\">get" +
-                    "</button></td>" : "") + "</tr>";
-        }
-
-        return out;
+        return "datenbank";
     }
 
 }

@@ -1,69 +1,178 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Datenbank</title>
+    <title>Title</title>
 </head>
 <body>
-<span>Zeige Tabelle: </span>
-<button onclick="myonclick('person')">Person</button>
-<button onclick="myonclick('adresse')">Adressen</button>
-<button onclick="myonclick('ort')">Orte</button>
+<button th:onclick="|window.location.href='/datenbank/getPersonen'|" type="button">Personen</button>
+<button th:onclick="|window.location.href='/datenbank/getAdressen'|" type="button">Adressen</button>
+<button th:onclick="|window.location.href='/datenbank/getOrte'|" type="button">Orte</button>
 <br><br>
-<table id="table"></table>
-<br><br>
-<div id="div">
+<div th:if="${adressenList != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>Hausnummer</th>
+            <th>Straße</th>
+            <th>Ort</th>
+            <th>Personen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="adresse : ${adressenList}">
+            <td th:text="${adresse.getHausNr()}"/>
+            <td th:text="${adresse.getStrasse()}"/>
+            <td><span th:text="${adresse.getOrt().getPLZ()}"/><span> </span><span
+                    th:text="${adresse.getOrt().getOrtsname()}"/></td>
+            <td>
+                <button
+                        th:onclick="getPersonInAdresse([[${adresse.getIdAdresse()}]])">get
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
+<div th:if="${personenList != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>Vorname</th>
+            <th>Familienname</th>
+            <th>Geburtsdatum</th>
+            <th>Telefon</th>
+            <th>E-Mail</th>
+            <th>Adressen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${personenList}">
+            <td th:text="${person.getVorname()}"/>
+            <td th:text="${person.getFamname()}"/>
+            <td th:text="${person.getGeburt()}"/>
+            <td th:text="${person.getTelefon()}"/>
+            <td th:text="${person.getEmail()}"/>
+            <td>
+                <button
+                        th:onclick="getAdressenForPerson([[${person.getIdPerson()}]])">get
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${ortList != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>PLZ</th>
+            <th>Ortsname</th>
+            <th>Vorwahl</th>
+            <th>Adressen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ort : ${ortList}">
+            <td th:text="${ort.getPLZ()}"/>
+            <td th:text="${ort.getOrtsname()}"/>
+            <td th:text="${ort.getTelefon()}"/>
+            <td>
+                <button
+                        th:onclick="getAdressenInOrt([[${ort.getIdOrt()}]])">get
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+<div th:if="${personInAdresseList != null}">
+    <span>Personen, die in <span th:text="${aAdresse.getStrasse()}"/> <span th:text="${aAdresse.getHausNr()}"/>,
+        <span th:text="${aAdresse.getOrt().getPLZ()}"/> <span th:text="${aAdresse.getOrt().getOrtsname()}"/>:</span><br>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>Einzugsdatum</th>
+            <th>Vorname</th>
+            <th>Familienname</th>
+            <th>Geburtsdatum</th>
+            <th>Telefon</th>
+            <th>E-Mail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="personWohntInAdresse : ${personInAdresseList}">
+            <td th:text="${personWohntInAdresse.getSeit()}"/>
+            <td th:text="${personWohntInAdresse.getPerson().getVorname()}"/>
+            <td th:text="${personWohntInAdresse.getPerson().getVorname()}"/>
+            <td th:text="${personWohntInAdresse.getPerson().getFamname()}"/>
+            <td th:text="${personWohntInAdresse.getPerson().getGeburt()}"/>
+            <td th:text="${personWohntInAdresse.getPerson().getTelefon()}"/>
+            <td th:text="${personWohntInAdresse.getPerson().getEmail()}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${adressenForPersonList != null}">
+    <span>Adressen für <span th:text="${aPerson.getVorname()}"/> <span th:text="${aPerson.getFamname()}"/>,
+        geboren am <span th:text="${aPerson.getGeburt()}"/>:</span><br>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>Einzugsdatum</th>
+            <th>Hausnummer</th>
+            <th>Straße</th>
+            <th>Ort</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="personWohntInAdresse : ${adressenForPersonList}">
+            <td th:text="${personWohntInAdresse.getSeit()}"/>
+            <td th:text="${personWohntInAdresse.getAdresse().getHausNr()}"/>
+            <td th:text="${personWohntInAdresse.getAdresse().getStrasse()}"/>
+            <td><span th:text="${personWohntInAdresse.getAdresse().getOrt().getPLZ()}"/><span> </span><span
+                    th:text="${personWohntInAdresse.getAdresse().getOrt().getOrtsname()}"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${adressenInOrtList != null}">
+    <span>Adressen für <span th:text="${aOrt.getPLZ()}"/> <span th:text="${aOrt.getOrtsname()}"/>:</span><br>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>Hausnummer</th>
+            <th>Straße</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="adresse : ${adressenInOrtList}">
+            <td th:text="${adresse.getHausNr()}"/>
+            <td th:text="${adresse.getStrasse()}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${internalError != null}">
+    <span th:text="${internalError}"></span>
+</div>
 </body>
 <script>
-    function getAdressenInOrt(id) {
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("div").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("POST", "/datenbank/getAdressenInOrt", true);
-        xhttp.setRequestHeader("Content-type", "text/plain");
-        xhttp.send(id);
+    function getPersonInAdresse(id) {
+        window.location.href = "/datenbank/getPersonInAdresse?id=" + id;
     }
 
     function getAdressenForPerson(id) {
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("div").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("POST", "/datenbank/getAdressenForPerson", true);
-        xhttp.setRequestHeader("Content-type", "text/plain");
-        xhttp.send(id);
+        window.location.href = "/datenbank/getAdressenForPerson?id=" + id;
     }
 
-    function getPersonInAdress(id) {
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("div").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("POST", "/datenbank/getPersonInAdress", true);
-        xhttp.setRequestHeader("Content-type", "text/plain");
-        xhttp.send(id);
-    }
-
-
-    function myonclick(table) {
-        document.getElementById("div").innerHTML = "";
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("table").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("POST", "/datenbank/getTable", true);
-        xhttp.setRequestHeader("Content-type", "text/plain");
-        xhttp.send(table);
+    function getAdressenInOrt(id) {
+        window.location.href = "/datenbank/getAdressenInOrt?id=" + id;
     }
 </script>
 </html>
