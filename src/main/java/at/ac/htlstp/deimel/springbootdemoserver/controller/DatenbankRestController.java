@@ -8,7 +8,7 @@ import at.ac.htlstp.deimel.springbootdemoserver.repository.AdresseEntityReposito
 import at.ac.htlstp.deimel.springbootdemoserver.repository.OrtEntityRepository;
 import at.ac.htlstp.deimel.springbootdemoserver.repository.PersonEntityRepository;
 import at.ac.htlstp.deimel.springbootdemoserver.repository.PersonWohntinAdresseEntityRepository;
-import at.ac.htlstp.deimel.springbootdemoserver.service.AdressService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.database.AdressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

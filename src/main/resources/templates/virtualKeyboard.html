@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Keyboard</title>
+</head>
+<!-- Teil des Keyboardtest, nicht mehr weiterverwendet -->
+<body>
+<table>
+    <tr th:each="row : ${keys}">s
+        <td th:each="key: ${row}">
+            <button th:text="${key}"/>
+        </td>
+    </tr>
+</table>
+</body>
+<script>
+
+</script>
+</html>

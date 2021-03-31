@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Maxima</title>
+</head>
+<body>
+<div>
+    <form method="post" th:action="@{/maxima/getMsg}">
+        <textarea cols="40" name="pmsg" rows="2"></textarea>
+        <br> <input type="submit" value="Save Message"/>
+    </form>
+</div>
+<br>
+<div th:if="${msgs != null}">
+    <ul th:each="m :${msgs}">
+        <li th:text="${m}"></li>
+    </ul>
+</div>
+<br>
+<div>
+    <form method="post" th:action="@{/maxima/destroy}">
+        <input type="submit" value="Destroy Session"/>
+    </form>
+</div>
+</body>
+</html>

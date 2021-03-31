@@ -1,4 +1,4 @@
-package at.ac.htlstp.deimel.springbootdemoserver.dto;
+package at.ac.htlstp.deimel.springbootdemoserver.dto.database;
 
 import lombok.Data;
 

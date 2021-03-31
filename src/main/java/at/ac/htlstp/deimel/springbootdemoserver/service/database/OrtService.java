@@ -1,6 +1,6 @@
-package at.ac.htlstp.deimel.springbootdemoserver.service;
+package at.ac.htlstp.deimel.springbootdemoserver.service.database;
 
-import at.ac.htlstp.deimel.springbootdemoserver.dto.OrtDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.OrtDTO;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.OrtEntity;
 import at.ac.htlstp.deimel.springbootdemoserver.repository.OrtEntityRepository;
 import org.modelmapper.ModelMapper;

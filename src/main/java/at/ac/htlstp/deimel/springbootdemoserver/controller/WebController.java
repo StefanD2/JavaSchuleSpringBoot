@@ -2,7 +2,7 @@ package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
 import at.ac.htlstp.deimel.springbootdemoserver.model.FormModel;
 import at.ac.htlstp.deimel.springbootdemoserver.model.SternDreickModel;
-import at.ac.htlstp.deimel.springbootdemoserver.service.AdressService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.database.AdressService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;

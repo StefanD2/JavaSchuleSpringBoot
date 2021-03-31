@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Datenbank</title>
 </head>
 <body>
 <button th:onclick="|window.location.href='/datenbank/getPersonen'|" type="button">Personen</button>
@@ -106,7 +106,6 @@
         <tbody>
         <tr th:each="personWohntInAdresse : ${personInAdresseList}">
             <td th:text="${personWohntInAdresse.getSeit()}"/>
-            <td th:text="${personWohntInAdresse.getPerson().getVorname()}"/>
             <td th:text="${personWohntInAdresse.getPerson().getVorname()}"/>
             <td th:text="${personWohntInAdresse.getPerson().getFamname()}"/>
             <td th:text="${personWohntInAdresse.getPerson().getGeburt()}"/>

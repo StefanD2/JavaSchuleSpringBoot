@@ -1,8 +1,8 @@
-package at.ac.htlstp.deimel.springbootdemoserver.service;
+package at.ac.htlstp.deimel.springbootdemoserver.service.database;
 
-import at.ac.htlstp.deimel.springbootdemoserver.dto.AdressDTO;
-import at.ac.htlstp.deimel.springbootdemoserver.dto.PersonDTO;
-import at.ac.htlstp.deimel.springbootdemoserver.dto.PersonWohntInAdresseDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.AdressDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.PersonDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.PersonWohntInAdresseDTO;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.AdresseEntity;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.PersonEntity;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.PersonWohntinAdresseEntity;

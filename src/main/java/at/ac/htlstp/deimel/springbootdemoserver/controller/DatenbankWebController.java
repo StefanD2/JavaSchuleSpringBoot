@@ -1,13 +1,13 @@
 package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
-import at.ac.htlstp.deimel.springbootdemoserver.dto.AdressDTO;
-import at.ac.htlstp.deimel.springbootdemoserver.dto.OrtDTO;
-import at.ac.htlstp.deimel.springbootdemoserver.dto.PersonDTO;
-import at.ac.htlstp.deimel.springbootdemoserver.dto.PersonWohntInAdresseDTO;
-import at.ac.htlstp.deimel.springbootdemoserver.service.AdressService;
-import at.ac.htlstp.deimel.springbootdemoserver.service.OrtService;
-import at.ac.htlstp.deimel.springbootdemoserver.service.PersonService;
-import at.ac.htlstp.deimel.springbootdemoserver.service.PersonWohntInAdresseService;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.AdressDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.OrtDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.PersonDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.PersonWohntInAdresseDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.service.database.AdressService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.database.OrtService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.database.PersonService;
+import at.ac.htlstp.deimel.springbootdemoserver.service.database.PersonWohntInAdresseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
