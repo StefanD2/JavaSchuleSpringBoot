@@ -1,5 +1,6 @@
 package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
+import at.ac.htlstp.deimel.springbootdemoserver.config.Endpoints;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
  * für eine Server-Server Kommunikation
  */
 @RestController
-@RequestMapping("/demo")
+@RequestMapping(Endpoints.demo)
 public class BaseController {
 
     @PostMapping("/ping")

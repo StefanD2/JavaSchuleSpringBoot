@@ -1,5 +1,6 @@
 package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
+import at.ac.htlstp.deimel.springbootdemoserver.config.Endpoints;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.AdresseEntity;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.OrtEntity;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.PersonEntity;
@@ -19,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/datenbankRest")
+@RequestMapping(path = Endpoints.datenbankRest)
 public class DatenbankRestController {
+
+    //TODO schow only on role user
 
     private final AdresseEntityRepository adresseEntityRepository;
     private final OrtEntityRepository ortEntityRepository;

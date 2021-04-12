@@ -1,5 +1,6 @@
 package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
+import at.ac.htlstp.deimel.springbootdemoserver.config.Endpoints;
 import at.ac.htlstp.deimel.springbootdemoserver.dto.database.AdressDTO;
 import at.ac.htlstp.deimel.springbootdemoserver.dto.database.OrtDTO;
 import at.ac.htlstp.deimel.springbootdemoserver.dto.database.PersonDTO;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/datenbank")
+@RequestMapping(path = Endpoints.datenbankMVC)
 public class DatenbankWebController {
+
+    //TODO schow only on role user
 
     private final AdressService adressService;
     private final PersonService personService;

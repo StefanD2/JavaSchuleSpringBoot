@@ -1,12 +1,19 @@
 package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
+import at.ac.htlstp.deimel.springbootdemoserver.config.Endpoints;
 import at.ac.htlstp.deimel.springbootdemoserver.model.FormModel;
 import at.ac.htlstp.deimel.springbootdemoserver.model.SternDreickModel;
 import at.ac.htlstp.deimel.springbootdemoserver.service.database.AdressService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -84,5 +91,24 @@ public class WebController {
     @RequestMapping("/datenbankRest")
     public String datenbank(Model model) {
         return "datenbankRest";
+    }
+
+    @RequestMapping(Endpoints.login)
+    public String login(Model model) {
+        return "login";
+    }
+
+    @RequestMapping(Endpoints.logout)
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:" + Endpoints.login;
+    }
+
+    @RequestMapping(Endpoints.accesDenied)
+    public String accesDenied(Model model){
+        return "redirect:"  + Endpoints.login; // TODO add accessDenied page
     }
 }

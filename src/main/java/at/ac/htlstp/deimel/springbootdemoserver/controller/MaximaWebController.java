@@ -1,5 +1,6 @@
 package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
+import at.ac.htlstp.deimel.springbootdemoserver.config.Endpoints;
 import at.ac.htlstp.deimel.springbootdemoserver.maxima.MaximaProcess;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +13,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/maxima")
+@RequestMapping(Endpoints.maxima)
 public class MaximaWebController {
 
-    //FIXME create custom HttpSession holder and remove this shit
+    //TODO schow only on role user
+
+    //FIXME create custom HttpSession holder ?
     volatile private static HashMap<String, MaximaProcess> sessionProzess = new HashMap<>();
     volatile private static HashMap<String, Long> sessionProzessTime = new HashMap<>();
     private static final long sessionTimeout = 15 * 60 * 1000; // in ms

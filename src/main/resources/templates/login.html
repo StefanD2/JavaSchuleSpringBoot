@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Login</h1>
+<div th:if="${param.logout}" th:text="#{login.logoutmeldung}" />
+<form th:action="@{/login}" method="post">
+    <div><label th:text="#{login.username}" /><input type="text" id="username" name="username"
+                                                     autofocus="autofocus"/></div>
+    <div><label th:text="#{login.password}" /><input type="password" id="password" name="password" /></div>
+    <div><input type="submit" th:value="#{login.button}"/></div>
+</form>
+</body>
+</html>
