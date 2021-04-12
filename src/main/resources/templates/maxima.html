@@ -5,23 +5,54 @@
     <title>Maxima</title>
 </head>
 <body>
+<table>
+    <thead>
+    <tr>
+        <th>index</th>
+        <th>input</th>
+        <th>output</th>
+        <th>delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="command : ${commands}">
+        <td th:text="${command.getIndex()}"></td>
+        <td th:text="${command.getInput()}"></td>
+        <td th:text="${command.getOutput()}"></td>
+        <td>
+            <button
+                    th:onclick="remove([[${command.getIndex()}]])">delete
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 <div>
-    <form method="post" th:action="@{/maxima/getMsg}">
-        <textarea cols="40" name="pmsg" rows="2"></textarea>
-        <br> <input type="submit" value="Save Message"/>
+    <form method="post" th:action="@{/maxima/execute}">
+        <textarea cols="40" name="command" rows="1"></textarea>
+        <br> <input type="submit" value="execute"/>
     </form>
 </div>
 <br>
-<div th:if="${msgs != null}">
-    <ul th:each="m :${msgs}">
-        <li th:text="${m}"></li>
-    </ul>
-</div>
 <br>
 <div>
+    <form method="post" th:action="@{/maxima/rerun}">
+        <input type="submit" value="Rerun all commands"/>
+    </form>
+    <form method="post" th:action="@{/maxima/restart}">
+        <input type="submit" value="Restart Maxima"/>
+    </form>
+    <br>
     <form method="post" th:action="@{/maxima/destroy}">
         <input type="submit" value="Destroy Session"/>
     </form>
 </div>
 </body>
+<script>
+    function remove(index) {
+        window.location.href = "/maxima/removeCommand?id=" + index;
+        document
+    }
+</script>
 </html>
