@@ -16,15 +16,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     private final CustomUserDetailsService customUserDetailsService;
 
     public WebSecurityConfig(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Autowired
@@ -47,18 +47,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cacheControl().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers(Endpoints.css + "/**").permitAll()
+                .antMatchers(Endpoints.css + "/*").permitAll()
                 .antMatchers(Endpoints.login).permitAll()
-                .antMatchers(Endpoints.demo).hasAuthority("ROLE_GUEST")
-                .antMatchers(Endpoints.datenbankMVC).hasAuthority("ROLE_USER")
-                .antMatchers(Endpoints.datenbankRest).hasAuthority("ROLE_USER")
-                .antMatchers(Endpoints.maxima).hasAuthority("ROLE_USER")
+                .antMatchers(Endpoints.demo + "/*").hasAuthority("ROLE_GUEST")
+                .antMatchers(Endpoints.datenbankMVC + "/*").hasAuthority("ROLE_USER")
+                .antMatchers(Endpoints.datenbankRest + "/*").hasAuthority("ROLE_USER")
+                .antMatchers(Endpoints.maxima + "/*").hasAuthority("ROLE_USER")
+                .antMatchers(Endpoints.manageUser + "/*").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedPage(Endpoints.accesDenied)
                 .and()
                 .formLogin().loginPage(Endpoints.login).and()
-                .logout().invalidateHttpSession(true).logoutUrl(Endpoints.logout)
+                .logout().invalidateHttpSession(true).clearAuthentication(true).logoutUrl(Endpoints.logout)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

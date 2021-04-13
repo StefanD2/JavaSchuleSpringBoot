@@ -1,6 +1,9 @@
 package at.ac.htlstp.deimel.springbootdemoserver.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
@@ -16,7 +19,7 @@ public class RestUser {
 
     private String endcodedPassword = "";
 
-    private String roles[] = new String[0];
+    private String[] roles = new String[0];
 
     public void setPassword(String password) {
         if (password.length() != 0)
@@ -42,6 +45,15 @@ public class RestUser {
                 continue;
             this.roles = Stream.of(this.roles).dropWhile(r::equals).toArray(String[]::new);
         }
+    }
+
+    @Override
+    public String toString(){
+        String out = "[Username: " + name + ", Roles: [";
+        for(String s : roles)
+            out+=s+",";
+        out += "]]";
+        return out;
     }
 
 }

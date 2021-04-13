@@ -15,25 +15,23 @@ import java.util.HashMap;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private HashMap<String, RestUser> users = new HashMap<>(); // TODO das ändern zu dantebank ?
+    private final HashMap<String, RestUser> users = new HashMap<>();
 
     public CustomUserDetailsService() {
         updateUser("GUEST", "GUEST", "GUEST");
         updateUser("USER", "USER", "GUEST", "USER");
-        updateUser("ADMIN", "ADMIN", "ADMIN");
+        updateUser("ADMIN", "ADMIN", "GUEST", "USER", "ADMIN");
     }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         if (users.containsKey(userName)) {
             RestUser restUser = users.get(userName);
-            restUser.addRole("ADMIN");
             UserDetails user =
                     User.withUsername(restUser.getName())
                             .password(restUser.getEndcodedPassword())
                             .roles(restUser.getRoles()).build();
             return user;
-            // TODO add userList und so (datenbank?)
         }
         throw new UsernameNotFoundException("Username " + userName + " not found");
 
@@ -84,7 +82,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
             restUser.setPassword(password);
             restUser.setRoles(roles);
-            users.put(user, restUser); // TODO add datenbank?
+            users.put(user, restUser);
         }
     }
 
@@ -93,7 +91,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
             restUser.setEndcodedPassword(enccryptedPassword);
             restUser.setRoles(roles);
-            users.put(user, restUser); // TODO add datenbank?
+            users.put(user, restUser);
         }
     }
 

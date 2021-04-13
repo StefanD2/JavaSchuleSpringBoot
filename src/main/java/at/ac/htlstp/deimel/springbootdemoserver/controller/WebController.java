@@ -31,7 +31,8 @@ public class WebController {
 
     @RequestMapping("")
     public String test(Model model) {
-        model.addAttribute("name", "Deimel");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("auth", auth.getAuthorities().toString());
         return "mainview";
     }
 
@@ -108,7 +109,8 @@ public class WebController {
     }
 
     @RequestMapping(Endpoints.accesDenied)
-    public String accesDenied(Model model){
-        return "redirect:"  + Endpoints.login; // TODO add accessDenied page
+    public String accesDenied(Model model) {
+        model.addAttribute("accessDenied", true);
+        return "redirect:" + Endpoints.login;
     }
 }

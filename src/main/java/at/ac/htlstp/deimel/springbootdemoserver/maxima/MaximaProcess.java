@@ -5,16 +5,15 @@ import at.ac.htlstp.deimel.springbootdemoserver.dto.maxima.MaximaDTO;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MaximaProcess {
 
+    public static final long maxCommandTime = 30 * 1000; // in ms
     private InputStreamReader inputStreamReader;
     private OutputStreamWriter outputStreamWriter;
     private Process process;
-
-    private List<MaximaDTO> commands;
-
-    public static final long maxCommandTime = 30 * 1000; // in ms
+    private final List<MaximaDTO> commands;
 
 
     public MaximaProcess() {
@@ -80,7 +79,12 @@ public class MaximaProcess {
         if (command == null || command.equals("") || !(command.endsWith(";") || !command.endsWith("$"))) {
             return;
         }
-        // TODO check brackets and stuff?
+        // basic check for matching brackets
+        if (Pattern.compile("\\(").matcher(command).results().count() != Pattern.compile("\\)").matcher(command).results().count() ||
+                Pattern.compile("\\[").matcher(command).results().count() != Pattern.compile("]").matcher(command).results().count() ||
+                Pattern.compile("\\{").matcher(command).results().count() != Pattern.compile("}").matcher(command).results().count()) {
+            return;
+        }
         String out = executeCommandS(command);
         commands.add(new MaximaDTO(commands.size(), command, out));
     }

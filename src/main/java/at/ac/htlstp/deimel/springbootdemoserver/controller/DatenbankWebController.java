@@ -20,8 +20,6 @@ import java.util.List;
 @RequestMapping(path = Endpoints.datenbankMVC)
 public class DatenbankWebController {
 
-    //TODO schow only on role user
-
     private final AdressService adressService;
     private final PersonService personService;
     private final OrtService ortService;

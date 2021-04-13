@@ -23,8 +23,6 @@ import java.util.List;
 @RequestMapping(path = Endpoints.datenbankRest)
 public class DatenbankRestController {
 
-    //TODO schow only on role user
-
     private final AdresseEntityRepository adresseEntityRepository;
     private final OrtEntityRepository ortEntityRepository;
     private final PersonEntityRepository personEntityRepository;

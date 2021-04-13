@@ -16,12 +16,9 @@ import java.util.Map;
 @RequestMapping(Endpoints.maxima)
 public class MaximaWebController {
 
-    //TODO schow only on role user
-
-    //FIXME create custom HttpSession holder ?
-    volatile private static HashMap<String, MaximaProcess> sessionProzess = new HashMap<>();
-    volatile private static HashMap<String, Long> sessionProzessTime = new HashMap<>();
     private static final long sessionTimeout = 15 * 60 * 1000; // in ms
+    private static final HashMap<String, MaximaProcess> sessionProzess = new HashMap<>();
+    private static final HashMap<String, Long> sessionProzessTime = new HashMap<>();
 
     @RequestMapping("")
     public String process(Model model, HttpSession httpSession) {

@@ -10,4 +10,6 @@ public class Endpoints {
     public static final String datenbankMVC = "/datenbank";
     public static final String maxima = "/maxima";
     public static final String css = "/css";
+    public static final String manageUser = "/manageUser";
+
 }
