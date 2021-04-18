@@ -1,42 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{sternDreieckTitel}"></title>
-    <link href="css/standard.css" rel="stylesheet" type="text/css">
-    <link href="css/sternDreieck.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/sternDreieck.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div class="stern">
-    <h1 th:text="#{stern}"/>
-    <img src="/img/stern.png" th:alt="#{sternSchaltung}"><br><br>
-    <form id="S" method="post" th:action="@{/sternEval}">
-        <label for="SR1"><span>R<sub>a</sub>:</span></label><input id="SR1" name="R1" onchange="sumbitIfValid('S')"
-                                                                   th:value="${tSR1}"
-                                                                   type="text"><br>
-        <label for="SR2"><span>R<sub>b</sub>:</span></label><input id="SR2" name="R2" onchange="sumbitIfValid('S')"
-                                                                   th:value="${tSR2}"
-                                                                   type="text"><br>
-        <label for="SR3"><span>R<sub>c</sub>:</span></label><input id="SR3" name="R3" onchange="sumbitIfValid('S')"
-                                                                   th:value="${tSR3}"
-                                                                   type="text">
-    </form>
-</div>
+<ul class="ulheader">
+    <li class="header"><a href="/" target="_self">HOME</a></li>
+    <li class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbank" target="_self">
+        Datenbank-MVC</a></li>
+    <li
+            class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbankRest" target="_self">Datenbank
+        -Rest</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_USER')"><a href="/maxima" target="_self">Maxima</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_ADMIN')"><a href="/manageUser" target="_self">User-Verwaltung</a></li>
+    <li class="header" style="float:right"><a href="/logout" target="_self">logout</a></li>
+    <li class="header" style="float:right"><a class="active" th:text="${#authentication.getName()}"></a></li>
+</ul>
+<div class="mydiv">
+    <div class="stern">
+        <h1 th:text="#{stern}"/>
+        <img src="/img/stern.png" th:alt="#{sternSchaltung}"><br><br>
+        <form id="S" method="post" th:action="@{/sternEval}">
+            <label for="SR1"><span>R<sub>a</sub>:</span></label><input id="SR1" name="R1" onchange="sumbitIfValid('S')"
+                                                                       th:value="${tSR1}"
+                                                                       type="text"><br>
+            <label for="SR2"><span>R<sub>b</sub>:</span></label><input id="SR2" name="R2" onchange="sumbitIfValid('S')"
+                                                                       th:value="${tSR2}"
+                                                                       type="text"><br>
+            <label for="SR3"><span>R<sub>c</sub>:</span></label><input id="SR3" name="R3" onchange="sumbitIfValid('S')"
+                                                                       th:value="${tSR3}"
+                                                                       type="text">
+        </form>
+    </div>
 
-<div class="dreieck">
-    <h1 th:text="#{dreieck}"/>
-    <img src="img/dreieck.png" th:alt="#{dreieckSchaltung}"><br><br>
-    <form id="D" method="post" th:action="@{/dreieckEval}">
-        <label for="DR1"><span>R<sub>ab</sub>:</span></label><input id="DR1" name="R1" onchange="sumbitIfValid('D')"
-                                                                    th:value="${tDR1}"
-                                                                    type="text"><br>
-        <label for="DR2"><span>R<sub>bc</sub>:</span></label><input id="DR2" name="R2" onchange="sumbitIfValid('D')"
-                                                                    th:value="${tDR2}"
-                                                                    type="text"><br>
-        <label for="DR3"><span>R<sub>ca</sub>:</span></label><input id="DR3" name="R3" onchange="sumbitIfValid('D')"
-                                                                    th:value="${tDR3}"
-                                                                    type="text">
-    </form>
+    <div class="dreieck">
+        <h1 th:text="#{dreieck}"/>
+        <img src="img/dreieck.png" th:alt="#{dreieckSchaltung}"><br><br>
+        <form id="D" method="post" th:action="@{/dreieckEval}">
+            <label for="DR1"><span>R<sub>ab</sub>:</span></label><input id="DR1" name="R1" onchange="sumbitIfValid('D')"
+                                                                        th:value="${tDR1}"
+                                                                        type="text"><br>
+            <label for="DR2"><span>R<sub>bc</sub>:</span></label><input id="DR2" name="R2" onchange="sumbitIfValid('D')"
+                                                                        th:value="${tDR2}"
+                                                                        type="text"><br>
+            <label for="DR3"><span>R<sub>ca</sub>:</span></label><input id="DR3" name="R3" onchange="sumbitIfValid('D')"
+                                                                        th:value="${tDR3}"
+                                                                        type="text">
+        </form>
+    </div>
 </div>
 </body>
 <script>

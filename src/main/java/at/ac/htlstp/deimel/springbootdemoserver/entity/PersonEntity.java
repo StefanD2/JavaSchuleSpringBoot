@@ -3,6 +3,7 @@ package at.ac.htlstp.deimel.springbootdemoserver.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 public class PersonEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -36,6 +38,6 @@ public class PersonEntity implements Serializable {
     private String email;
 
     @OneToMany(mappedBy = "person")
-    private List<PersonWohntinAdresseEntity> personWohntinAdresse = new ArrayList<PersonWohntinAdresseEntity>();
+    private List<PersonWohntinAdresseEntity> personWohntinAdresse = new ArrayList<>();
 
 }

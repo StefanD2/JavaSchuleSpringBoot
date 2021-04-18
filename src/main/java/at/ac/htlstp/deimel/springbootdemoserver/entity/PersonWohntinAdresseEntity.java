@@ -3,6 +3,7 @@ package at.ac.htlstp.deimel.springbootdemoserver.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -11,6 +12,7 @@ import java.sql.Date;
 @Table(name = "person_wohntin_adresse")
 public class PersonWohntinAdresseEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

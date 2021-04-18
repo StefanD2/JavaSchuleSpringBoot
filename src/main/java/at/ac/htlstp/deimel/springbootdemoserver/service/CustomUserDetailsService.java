@@ -1,99 +1,77 @@
 package at.ac.htlstp.deimel.springbootdemoserver.service;
 
-import at.ac.htlstp.deimel.springbootdemoserver.model.RestUser;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+import at.ac.htlstp.deimel.springbootdemoserver.dto.database.UserDTO;
+import at.ac.htlstp.deimel.springbootdemoserver.service.database.UserService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final HashMap<String, RestUser> users = new HashMap<>();
+    private final UserService userService;
 
-    public CustomUserDetailsService() {
-        updateUser("GUEST", "GUEST", "GUEST");
-        updateUser("USER", "USER", "GUEST", "USER");
-        updateUser("ADMIN", "ADMIN", "GUEST", "USER", "ADMIN");
+    public CustomUserDetailsService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        if (users.containsKey(userName)) {
-            RestUser restUser = users.get(userName);
-            UserDetails user =
-                    User.withUsername(restUser.getName())
-                            .password(restUser.getEndcodedPassword())
-                            .roles(restUser.getRoles()).build();
-            return user;
+        UserDTO userDTO;
+        if ((userDTO = userService.findByUsername(userName)) != null) {
+            return User.withUsername(userDTO.getUsername())
+                    .password(userDTO.getEncryptedPassword())
+                    .roles(userDTO.getRoles()).build();
         }
         throw new UsernameNotFoundException("Username " + userName + " not found");
 
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(RestUser restUser) {
-        return AuthorityUtils.createAuthorityList(restUser.getRoles());
-    }
-
-    public void updateUserEncryptedPassword(String user, String encryptedPassword) {
-        user = user.trim();
+    public void updateUserEncryptedPassword(String username, String encryptedPassword) {
+        username = username.trim();
         encryptedPassword = encryptedPassword.trim();
-        if (user.length() != 0) {
-            RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
-            restUser.setEndcodedPassword(encryptedPassword);
-            users.put(user, restUser);
+        if (username.length() != 0) {
+            UserDTO user = userService.findByUsername(username);
+            if (user == null) {
+                return;
+            }
+            user.setEncryptedPassword(encryptedPassword);
+            userService.save(user);
         }
     }
 
-    public void updateUserPassword(String user, String password) {
-        user = user.trim();
+    public void updateUserPassword(String username, String password) {
+        username = username.trim();
         password = password.trim();
-        if (user.length() != 0) {
-            RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
-            restUser.setPassword(password);
-            users.put(user, restUser);
+        if (username.length() != 0) {
+            UserDTO user = userService.findByUsername(username);
+            if (user == null)
+                return;
+            user.setPassword(password);
+            userService.save(user);
         }
     }
 
-    public void addUserRoles(String user, String... roles) {
-        if (user.length() != 0) {
-            RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
-            restUser.addRole(roles);
-            users.put(user, restUser);
+    public void addUserRoles(String username, String... roles) {
+        if (username.length() != 0) {
+            UserDTO user = userService.findByUsername(username);
+            if (user == null)
+                return;
+            user.addRole(roles);
+            userService.save(user);
         }
     }
 
-    public void removeUserRoles(String user, String... roles) {
-        if (user.length() != 0) {
-            RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
-            restUser.removeRole(roles);
-            users.put(user, restUser);
+    public void removeUserRoles(String username, String... roles) {
+        if (username.length() != 0) {
+            UserDTO user = userService.findByUsername(username);
+            if (user == null)
+                return;
+            user.removeRole(roles);
+            userService.save(user);
         }
     }
-
-    public void updateUser(String user, String password, String... roles) {
-        if (user.length() != 0) {
-            RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
-            restUser.setPassword(password);
-            restUser.setRoles(roles);
-            users.put(user, restUser);
-        }
-    }
-
-    public void updateUserEncrypted(String user, String enccryptedPassword, String... roles) {
-        if (user.length() != 0) {
-            RestUser restUser = users.getOrDefault(user, new RestUser(user, "", null));
-            restUser.setEndcodedPassword(enccryptedPassword);
-            restUser.setRoles(roles);
-            users.put(user, restUser);
-        }
-    }
-
 
 }

@@ -1,9 +1,27 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <title>Datenbank</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<ul class="ulheader">
+    <li class="header"><a href="/" target="_self">HOME</a></li>
+    <li class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbank" target="_self">
+        Datenbank-MVC</a></li>
+    <li
+            class="header" sec:authorize="hasRole('ROLE_USER')"><a class="active" href="/datenbankRest"
+                                                                   target="_self">Datenbank
+        -Rest</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_USER')"><a href="/maxima" target="_self">Maxima</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_ADMIN')"><a href="/manageUser" target="_self">User-Verwaltung</a></li>
+    <li class="header" style="float:right"><a href="/logout" target="_self">logout</a></li>
+    <li class="header" style="float:right"><a class="active" th:text="${#authentication.getName()}"></a></li>
+</ul>
+
 <span>Zeige Tabelle: </span>
 <button onclick="myonclick('person')">Person</button>
 <button onclick="myonclick('adresse')">Adressen</button>
@@ -15,6 +33,7 @@
 </div>
 
 </body>
+
 <script>
     function getAdressenInOrt(id) {
         let xhttp = new XMLHttpRequest();

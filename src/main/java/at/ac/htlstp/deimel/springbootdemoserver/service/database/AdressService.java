@@ -1,7 +1,6 @@
 package at.ac.htlstp.deimel.springbootdemoserver.service.database;
 
 import at.ac.htlstp.deimel.springbootdemoserver.dto.database.AdressDTO;
-import at.ac.htlstp.deimel.springbootdemoserver.dto.database.PersonWohntInAdresseDTO;
 import at.ac.htlstp.deimel.springbootdemoserver.entity.AdresseEntity;
 import at.ac.htlstp.deimel.springbootdemoserver.repository.AdresseEntityRepository;
 import org.modelmapper.ModelMapper;
@@ -35,12 +34,6 @@ public class AdressService {
             return mapper.map(adresseEntity, AdressDTO.class);
         }
         return null;
-    }
-
-    public List<AdressDTO> findAllByPersonWohntInAdresse(List<PersonWohntInAdresseDTO> personWohntInAdresseDTOList) {
-        List<AdressDTO> adressDTOList = new ArrayList<>();
-        personWohntInAdresseDTOList.forEach(personWohntInAdresseDTO -> adressDTOList.add(mapper.map(personWohntInAdresseDTO.getPerson(), AdressDTO.class)));
-        return adressDTOList;
     }
 
 }

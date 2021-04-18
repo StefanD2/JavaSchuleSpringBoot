@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User-Verwaltung</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<ul class="ulheader">
+    <li class="header"><a href="/" target="_self">HOME</a></li>
+    <li class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbank" target="_self">
+        Datenbank-MVC</a></li>
+    <li
+            class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbankRest" target="_self">Datenbank
+        -Rest</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_USER')"><a href="/maxima" target="_self">Maxima</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_ADMIN')"><a class="active" href="/manageUser" target="_self">User-Verwaltung</a>
+    </li>
+    <li class="header" style="float:right"><a href="/logout" target="_self">logout</a></li>
+    <li class="header" style="float:right"><a class="active" th:text="${#authentication.getName()}"></a></li>
+</ul>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')" th:if="${users != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Roles</th>
+            <th>Password</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td>
+                <form method="post" th:action="@{/manageUser/changeUsername}" th:id="${'user'+user.getIdUser()}">
+                    <input name="username" th:onchange="onUserChange([[${user.getIdUser()}]])" th:value="${user.getUsername()}"
+                           type="text">
+                    <input name="idUser" th:value="${user.getIdUser()}" type="hidden">
+                </form>
+            </td>
+            <td th:text="${user.getRolesString()}"></td>
+            <td>
+                <form method="post" th:action="@{/manageUser/changePassword}" th:id="${'pw'+user.getIdUser()}">
+                    <input name="password" th:onchange="onPwChange([[${user.getIdUser()}]])" type="text">
+                    <input name="idUser" th:value="${user.getIdUser()}" type="hidden">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+    function onUserChange(idUser) {
+        document.getElementById("user" + idUser).submit();
+    }
+
+    function onPwChange(idUser) {
+        document.getElementById("pw" + idUser).submit();
+    }
+</script>
+</html>

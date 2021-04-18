@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Hashtable;
 import java.util.Map;
 
 @Controller
@@ -17,8 +16,8 @@ import java.util.Map;
 public class MaximaWebController {
 
     private static final long sessionTimeout = 15 * 60 * 1000; // in ms
-    private static final HashMap<String, MaximaProcess> sessionProzess = new HashMap<>();
-    private static final HashMap<String, Long> sessionProzessTime = new HashMap<>();
+    private static final Hashtable<String, MaximaProcess> sessionProzess = new Hashtable<>();
+    private static final Hashtable<String, Long> sessionProzessTime = new Hashtable<>();
 
     @RequestMapping("")
     public String process(Model model, HttpSession httpSession) {
@@ -34,7 +33,7 @@ public class MaximaWebController {
     }
 
     @RequestMapping("/execute")
-    public String getMesg(@RequestParam("command") String command, Model model, HttpSession httpSession) {
+    public String getMsg(@RequestParam("command") String command, HttpSession httpSession) {
         MaximaProcess process;
         if (httpSession.isNew() || (process = sessionProzess.get(httpSession.getId())) == null) {
             process = new MaximaProcess();
@@ -98,9 +97,7 @@ public class MaximaWebController {
 
     private void validateMaximaProcesses() {
         new Thread(() -> {
-            Iterator<Map.Entry<String, Long>> iterable = sessionProzessTime.entrySet().iterator();
-            for (; iterable.hasNext(); ) {
-                Map.Entry<String, Long> mapEntry = iterable.next();
+            for (Map.Entry<String, Long> mapEntry : sessionProzessTime.entrySet()) {
                 if (mapEntry.getValue() + sessionTimeout < System.currentTimeMillis()) {
                     sessionProzessTime.remove(mapEntry.getKey());
                     sessionProzess.remove(mapEntry.getKey());

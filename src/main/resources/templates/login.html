@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<ul class="ulheader">
+    <li class="header"><a href="/" target="_self">HOME</a></li>
+    <li class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbank" target="_self">
+        Datenbank-MVC</a></li>
+    <li
+            class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbankRest" target="_self">Datenbank
+        -Rest</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_USER')"><a href="/maxima" target="_self">Maxima</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_ADMIN')"><a href="/manageUser" target="_self">User-Verwaltung</a></li>
+    <li class="header" style="float:right"><a href="/logout" target="_self">logout</a></li>
+</ul>
+
 <h1>Login</h1>
-<div th:if="${param.logout}" th:text="#{login.logoutmeldung}" />
+<div th:if="${param.logout}" th:text="#{login.logoutmeldung}"/>
 <div th:if="${accessDenied != null}" th:text="#{accessDeniedMessage}"></div>
-<form th:action="@{/login}" method="post">
-    <div><label th:text="#{login.username}" /><input type="text" id="username" name="username"
-                                                     autofocus="autofocus"/></div>
-    <div><label th:text="#{login.password}" /><input type="password" id="password" name="password" /></div>
-    <div><input type="submit" th:value="#{login.button}"/></div>
+<form method="post" th:action="@{/login}">
+    <div><label th:text="#{login.username}"/><input autofocus="autofocus" id="username" name="username"
+                                                    type="text"/></div>
+    <div><label th:text="#{login.password}"/><input id="password" name="password" type="password"/></div>
+    <div><input th:value="#{login.button}" type="submit"/></div>
 </form>
 </body>
 </html>

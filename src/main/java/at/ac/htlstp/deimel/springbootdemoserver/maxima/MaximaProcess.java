@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
 public class MaximaProcess {
 
     public static final long maxCommandTime = 30 * 1000; // in ms
+    private final List<MaximaDTO> commands;
     private InputStreamReader inputStreamReader;
     private OutputStreamWriter outputStreamWriter;
     private Process process;
-    private final List<MaximaDTO> commands;
 
 
     public MaximaProcess() {
@@ -41,15 +41,15 @@ public class MaximaProcess {
     private String readUntil(char inOut) {
         try {
             long startTime = System.currentTimeMillis();
-            String read = "";
-            while (!read.matches("(.|\\r|\\n)*\\(%" + inOut + "\\d+\\)") && startTime + maxCommandTime >= System.currentTimeMillis()) {
+            StringBuilder read = new StringBuilder();
+            while (!read.toString().matches("(.|\\r|\\n)*\\(%" + inOut + "\\d+\\)") && startTime + maxCommandTime >= System.currentTimeMillis()) {
                 if (inputStreamReader.ready()) {
-                    read += (char) inputStreamReader.read();
+                    read.append((char) inputStreamReader.read());
                 }
             }
             if (startTime + maxCommandTime < System.currentTimeMillis())
                 return "TIMEOUT, please remove command and restart maxima";
-            return read;
+            return read.toString();
         } catch (IOException e) {
             return e.getMessage();
         }
@@ -68,8 +68,7 @@ public class MaximaProcess {
             outputStreamWriter.write(command);
             outputStreamWriter.flush();
             dumpInput();
-            String out = readOutput();
-            return out;
+            return readOutput();
         } catch (IOException e) {
             return e.getMessage();
         }
@@ -97,7 +96,7 @@ public class MaximaProcess {
         try {
             outputStreamWriter.write("quit();");
             outputStreamWriter.flush();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         process.destroy();
         if (process.isAlive()) {

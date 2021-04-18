@@ -1,23 +1,40 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
-    <title>START</title>
+    <title>HOME</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<ul class="ulheader">
+    <li class="header"><a class="active" href="/" target="_self">HOME</a></li>
+    <li class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbank" target="_self">
+        Datenbank-MVC</a></li>
+    <li
+            class="header" sec:authorize="hasRole('ROLE_USER')"><a href="/datenbankRest"
+                                                                   target="_self">Datenbank
+        -Rest</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_USER')"><a href="/maxima" target="_self">Maxima</a></li>
+    <li class="header"
+        sec:authorize="hasRole('ROLE_ADMIN')"><a href="/manageUser" target="_self">User-Verwaltung</a></li>
+    <li class="header" style="float:right"><a href="/logout" target="_self">logout</a></li>
+    <li class="header" style="float:right"><a class="active" th:text="${#authentication.getName()}"></a></li>
+</ul>
+
 <span>Das ist ein SpringBoot Server, der in AIIT in der Schule erstellt wurde.</span>
 <h1>Links</h1>
 <a href="/form">einfaches Form</a><br>
 <a href="/sterndreieck">Stern-Dreieck-Berechnung</a><br>
 <a href="v1/t1.html">Testseite - static</a><br>
 <a href="Hallo.html">Hallo - static</a><br>
-<div th:if="${auth.contains('ROLE_USER')}">
+<div sec:authorize="hasRole('ROLE_USER')">
     <br>
     <a href="/datenbank">MCV-Datenbank-Visualisierung</a><br>
     <a href="/datenbankRest">Rest-Datenbank-Visualisierung</a><br>
     <a href="/maxima">Maxima</a><br>
 </div>
-<div th:if="${auth.contains('ROLE_ADMIN')}">
+<div sec:authorize="hasRole('ROLE_ADMIN')">
     <br>
     <a href="/manageUser">User Verwaltung</a><br>
 </div>

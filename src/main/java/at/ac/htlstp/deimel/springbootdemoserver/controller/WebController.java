@@ -2,8 +2,7 @@ package at.ac.htlstp.deimel.springbootdemoserver.controller;
 
 import at.ac.htlstp.deimel.springbootdemoserver.config.Endpoints;
 import at.ac.htlstp.deimel.springbootdemoserver.model.FormModel;
-import at.ac.htlstp.deimel.springbootdemoserver.model.SternDreickModel;
-import at.ac.htlstp.deimel.springbootdemoserver.service.database.AdressService;
+import at.ac.htlstp.deimel.springbootdemoserver.model.SternDreieckModel;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -23,16 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(path = "")
 public class WebController {
 
-    private final AdressService adressService;
-
-    public WebController(AdressService adressService) {
-        this.adressService = adressService;
-    }
-
     @RequestMapping("")
-    public String test(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("auth", auth.getAuthorities().toString());
+    public String test() {
         return "mainview";
     }
 
@@ -60,10 +51,10 @@ public class WebController {
     }
 
     @RequestMapping("/sternEval")
-    public String evalStern(@ModelAttribute SternDreickModel sternDreickModel, Model model) {
-        Double Ra = Double.parseDouble(sternDreickModel.getR1().replace(',', '.'));
-        Double Rb = Double.parseDouble(sternDreickModel.getR2().replace(',', '.'));
-        Double Rc = Double.parseDouble(sternDreickModel.getR3().replace(',', '.'));
+    public String evalStern(@ModelAttribute SternDreieckModel sternDreieckModel, Model model) {
+        Double Ra = Double.parseDouble(sternDreieckModel.getR1().replace(',', '.'));
+        Double Rb = Double.parseDouble(sternDreieckModel.getR2().replace(',', '.'));
+        Double Rc = Double.parseDouble(sternDreieckModel.getR3().replace(',', '.'));
         model.addAttribute("tSR1", String.format("%.3f", Ra));
         model.addAttribute("tSR2", String.format("%.3f", Rb));
         model.addAttribute("tSR3", String.format("%.3f", Rc));
@@ -75,10 +66,10 @@ public class WebController {
     }
 
     @RequestMapping("/dreieckEval")
-    public String evalDreieck(@ModelAttribute SternDreickModel sternDreickModel, Model model) {
-        Double Rab = Double.parseDouble(sternDreickModel.getR1().replace(',', '.'));
-        Double Rbc = Double.parseDouble(sternDreickModel.getR2().replace(',', '.'));
-        Double Rca = Double.parseDouble(sternDreickModel.getR3().replace(',', '.'));
+    public String evalDreieck(@ModelAttribute SternDreieckModel sternDreieckModel, Model model) {
+        Double Rab = Double.parseDouble(sternDreieckModel.getR1().replace(',', '.'));
+        Double Rbc = Double.parseDouble(sternDreieckModel.getR2().replace(',', '.'));
+        Double Rca = Double.parseDouble(sternDreieckModel.getR3().replace(',', '.'));
         model.addAttribute("tDR1", String.format("%.3f", Rab));
         model.addAttribute("tDR2", String.format("%.3f", Rbc));
         model.addAttribute("tDR3", String.format("%.3f", Rca));
@@ -90,12 +81,12 @@ public class WebController {
     }
 
     @RequestMapping("/datenbankRest")
-    public String datenbank(Model model) {
+    public String datenbank() {
         return "datenbankRest";
     }
 
     @RequestMapping(Endpoints.login)
-    public String login(Model model) {
+    public String login() {
         return "login";
     }
 

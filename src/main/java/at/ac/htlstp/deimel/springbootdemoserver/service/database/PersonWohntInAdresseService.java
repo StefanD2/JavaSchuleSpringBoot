@@ -25,14 +25,6 @@ public class PersonWohntInAdresseService {
         mapper = new ModelMapper();
     }
 
-    public List<PersonWohntInAdresseDTO> findAll() {
-        List<PersonWohntinAdresseEntity> personWohntinAdresseEntityList =
-                personWohntinAdresseEntityRepository.findAll();
-        List<PersonWohntInAdresseDTO> personWohntInAdresseDTOList = new ArrayList<>();
-        personWohntinAdresseEntityList.forEach(personWohntinAdresseEntity -> personWohntInAdresseDTOList.add(mapper.map(personWohntinAdresseEntity, PersonWohntInAdresseDTO.class)));
-        return personWohntInAdresseDTOList;
-    }
-
     public List<PersonWohntInAdresseDTO> findAllByAdresse(AdressDTO adressDTO) {
         List<PersonWohntinAdresseEntity> personWohntinAdresseEntityList = personWohntinAdresseEntityRepository.findAllByAdresse(mapper.map(adressDTO, AdresseEntity.class));
         List<PersonWohntInAdresseDTO> personWohntInAdresseDTOList = new ArrayList<>();

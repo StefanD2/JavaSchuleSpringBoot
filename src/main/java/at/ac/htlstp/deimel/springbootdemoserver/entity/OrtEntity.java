@@ -3,6 +3,7 @@ package at.ac.htlstp.deimel.springbootdemoserver.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 public class OrtEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -29,6 +31,6 @@ public class OrtEntity implements Serializable {
     private String telefon;
 
     @OneToMany(mappedBy = "ort")
-    private List<AdresseEntity> adressen = new ArrayList<AdresseEntity>();
+    private List<AdresseEntity> adressen = new ArrayList<>();
 
 }
